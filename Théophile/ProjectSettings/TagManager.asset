@@ -41,3 +41,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 884007601
+    locked: 0
+  - name: Joueur
+    uniqueID: 1501641313
+    locked: 0
+  - name: Plateforme
+    uniqueID: 1203351911
+    locked: 0
+  - name: Bushs
+    uniqueID: 2624341997
+    locked: 0
+  - name: Avant plan
+    uniqueID: 2827274513
+    locked: 0

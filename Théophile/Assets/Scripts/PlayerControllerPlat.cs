@@ -15,6 +15,7 @@ public class PlayerControllerPlat : MonoBehaviour {
     private bool grounded = true;
     private float h;
     private bool facingRight = false;
+    public bool canMove = true;
 
 	void Start () {
         rb2d = GetComponent<Rigidbody2D>();
@@ -24,13 +25,30 @@ public class PlayerControllerPlat : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        Mouvement();
+        if (Input.GetKeyDown(KeyCode.E)&&grounded) {
+            Attack();
+        }
+        if (canMove)
+        {
+            Mouvement();
+        }
+        else {
+            rb2d.velocity = Vector2.zero;
+        }
         UpdateAnimator();
         if ((facingRight && rb2d.velocity.x < 0) || (!facingRight && rb2d.velocity.x > 0f)) {
             Flip();
         }
         
+    }
+
+    void Attack() {
+        anim.SetTrigger("Attack");
+        canMove = false;
+    }
+
+    public void EndAttack() {
+        canMove = true;
     }
 
     void Mouvement() {

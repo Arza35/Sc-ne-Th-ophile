@@ -5,7 +5,9 @@ using UnityEngine;
 public class FantomeSpawner : MonoBehaviour {
 
     public float spawnRate;
-    public GameObject Fantome;
+    public Vector2 offSetSpawnRate;
+    public GameObject FantomeDevant;
+    public GameObject FantomeDerriere;
     public bool gizmos = true;
 
     public float xOffset;
@@ -13,23 +15,36 @@ public class FantomeSpawner : MonoBehaviour {
     public float yOffset;
 
 	void Start () {
-        StartCoroutine(beginSpawn());
-	}
+        StartCoroutine(beginSpawnDevant());
+        StartCoroutine(beginSpawnDerriere());
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
 
-    IEnumerator beginSpawn() {
-        yield return new WaitForSeconds(spawnRate);
-        Instantiate(Fantome, new Vector2(Mathf.Clamp(transform.position.x, transform.position.x - xOffset, transform.position.x + xOffset), Mathf.Clamp(transform.position.y, transform.position.y - yOffset, transform.position.y + yOffset)), Quaternion.identity);
+    IEnumerator beginSpawnDevant() {
+        float offset = Random.Range(offSetSpawnRate.x, offSetSpawnRate.y);
+        float randomX = Random.Range(transform.position.x - xOffset, transform.position.x + xOffset);
+        float randomY = Random.Range(transform.position.y - yOffset, transform.position.y + yOffset);
+        yield return new WaitForSeconds(spawnRate+offset);
+        Instantiate(FantomeDevant, new Vector2(randomX, randomY), Quaternion.identity);
+        StartCoroutine(beginSpawnDevant());
+    }
+
+    IEnumerator beginSpawnDerriere() {
+        float offset = Random.Range(offSetSpawnRate.x, offSetSpawnRate.y);
+        float randomX = Random.Range(transform.position.x - xOffset, transform.position.x + xOffset);
+        float randomY = Random.Range(transform.position.y - yOffset, transform.position.y + yOffset);
+        yield return new WaitForSeconds(spawnRate + offset+2f);
+        Instantiate(FantomeDerriere, new Vector2(randomX, randomY), Quaternion.identity); StartCoroutine(beginSpawnDerriere());
     }
 
     private void OnDrawGizmos()
     {
         if (gizmos) {
-
+            Gizmos.DrawCube(transform.position, new Vector3(xOffset*2, yOffset*2, 1f));
         }
     }
 }

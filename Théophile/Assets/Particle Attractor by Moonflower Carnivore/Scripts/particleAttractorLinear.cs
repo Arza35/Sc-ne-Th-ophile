@@ -42,7 +42,6 @@ public class particleAttractorLinear : MonoBehaviour {
             ParticleSystem.Particle p = m_Particles[i];
             
             m_Particles[i].position = Vector3.LerpUnclamped(m_Particles[i].position, target.position, step);
-            Debug.Log(target.position);
 		}
         ps.SetParticles(m_Particles, numParticlesAlive);
 	}
